@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,6 +36,8 @@ import com.example.entity.AddressData;
 import com.example.entity.Info;
 import com.example.service.DBService;
 import com.example.service.InfoService;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class MainController {
@@ -115,7 +119,6 @@ public class MainController {
 			@RequestParam("password") String password) {
 
 		infoService.InsertInfo(nickname, username, passwordEncoder.encode(password));
-
 		DriverConfigLoader loader = dbService.getConnection(); // db연결
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", username);
@@ -204,8 +207,15 @@ public class MainController {
 				System.out.println(dest);
 				// 파일 저장
 				file.transferTo(dest);
+				// 이미지 리사이징
+				BufferedImage originalImage = ImageIO.read(dest);
+				BufferedImage resizedImage = Thumbnails.of(originalImage)
+											.size(640,360)
+											.outputFormat("jpg")
+											.asBufferedImage();
+				File resizedFile = new File(filePath);
+				ImageIO.write(resizedImage, "jpg", resizedFile);
 				// 파일 경로에서 역슬래시 바꾸는 곳.
-				System.out.println(dest);
 				filePath = filePath.replace("\\\\", "/");
 				uploadedFilePath = filePath.replace("\\", "/");
 
@@ -343,7 +353,7 @@ public class MainController {
 		updateValue.put("nickname", info.getNickname());
 		updateValue.put("age", info.getAge());
 		updateValue.put("phone", info.getPhone());
-		updateValue.put("address", info.getAddress());
+		/* updateValue.put("address", info.getAddress()); */
 		updateValue.put("interest", info.getInterest());
 		updateValue.put("mbti", info.getMbti());
 		updateValue.put("sport", info.getMbti());
