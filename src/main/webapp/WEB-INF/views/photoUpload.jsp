@@ -147,7 +147,6 @@ body {
 				<h2 class="upload-text"> <i class="material-icons">file_upload</i> UPLOAD YOUR IMAGES</h2>
 			</div>
 		</div>
-
 		<div class="container">
 			<div class="main-body">
 				<div class="cards-list">
@@ -181,9 +180,6 @@ body {
 		</div>
 	</div>
 
-
-	<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-		class="bi bi-arrow-up"></i></a>
 
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

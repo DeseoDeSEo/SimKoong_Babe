@@ -67,14 +67,7 @@
                     <div class="navbar-nav ms-auto">
                         <a href="index" class="nav-item nav-link">Home</a>
                         <a href="recommend" class="nav-item nav-link">RECOMMEND</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="photoUpload" class="dropdown-item">내 정보 입력</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="like" class="dropdown-item">LIKE</a>
-                            </div>
-                        </div>
+                        <a href="interaction" class="nav-item nav-link">Like</a>                           
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu rounded-0 m-0">
