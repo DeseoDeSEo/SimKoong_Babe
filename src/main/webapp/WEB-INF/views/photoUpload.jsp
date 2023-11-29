@@ -46,6 +46,7 @@
 
 <!-- Template Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 body {
 	margin-top: 20px;
@@ -65,7 +66,8 @@ body {
 .cards-list {
 	z-index: 0;
 	width: 100%;
-	height: 70%; display : flex;
+	height: 70%;
+	display: flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
 	display: flex;
@@ -125,6 +127,12 @@ body {
 		flex-direction: column;
 	}
 }
+ #move{
+ 	color : graytext;
+ 	text-align:right;
+ 	margin-top:10px;
+ 	margin-bottom:10px;
+ }
 </style>
 </head>
 <body>
@@ -136,7 +144,7 @@ body {
 
 		<div class="row">
 			<div class="col-12 text-center">
-				<h2>Upload Image</h2>
+				<h2 class="upload-text"> <i class="material-icons">file_upload</i> UPLOAD YOUR IMAGES</h2>
 			</div>
 		</div>
 
@@ -147,24 +155,29 @@ body {
 						<div class="card ${i.count}">
 							<div class="card_image">
 								<img src="data:image/jpeg;base64,${imageData}" style="cursor: pointer;" onclick="openFileInput(${i.count})">
-							<form action="${cpath}/fileUpload" method="post"
-								enctype="multipart/form-data" id="imageForm${i.count}">
-								<input type="hidden" name="${_csrf.parameterName}"
-									value="${_csrf.token}" /> 
-									<input type="file"
-									id="photo${i.count}" name="file" accept="image/*"
-									style="width: 100%; visibility: hidden;"
-									onchange="uploadOnChange(this)"> 
-									<input type="hidden"
-									id="photoNum" name="photoNum" value="${i.count}">
-							
-							</form>
+								<form action="${cpath}/fileUpload" method="post" enctype="multipart/form-data" id="imageForm${i.count}">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+										<input type="file" id="photo${i.count}" name="file" accept="image/*"  class="custom-input" onchange="uploadOnChange(this)"> 
+										  <input type="hidden" id="photoNum" name="photoNum" value="${i.count}">
+								</form>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
 				<br> <br> <br>
 			</div>
+			<div class="row">
+				<div class="col-sm-10">
+					<h4 id="move">정보 입력 페이지로 이동</h4>
+				</div>
+				<div class="col-sm-2">
+					<a href="/update" class="btn btn-lg btn-lg-square"> <i
+						class="bi bi-chevron-right" style="color: white"></i>
+					</a>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 
@@ -184,7 +197,7 @@ body {
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 
-	 <script>
+	<script>
 	 function uploadOnChange(input) {
 	       if (input.files && input.files[0]) {
 	           // 파일이 선택되면 자동으로 form submit

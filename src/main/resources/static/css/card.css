@@ -2,22 +2,22 @@
     - Header -
 *****************/
 header {
-	position:relative;
-	left:0;
-	top:0;
-	width:100%;
-	min-height:120px;
-	padding:50px 0;
-	color:#fff;
-	    background: #383838 url(https://www.athenadesignstudio.com/plugins/switch/images/bg.jpg) no-repeat center center;
-	margin-bottom:30px
+   position:relative;
+   left:0;
+   top:0;
+   width:100%;
+   min-height:120px;
+   padding:50px 0;
+   color:#fff;
+       background: #383838 url(https://www.athenadesignstudio.com/plugins/switch/images/bg.jpg) no-repeat center center;
+   margin-bottom:30px
 }
 
 /* Logo */
 header .logo {
-	clear:both;
+   clear:both;
     display:block;
-	text-align:center;
+   text-align:center;
     padding-bottom:10px;
 }
 
@@ -25,12 +25,12 @@ header .logo {
 header h1 {
     font-weight:300;
     font-size:24px;
-    color:#eee;	
-	letter-spacing:2px;
-	text-align:center;
-	text-transform:uppercase;
-	margin:0 !important;
-	padding-bottom:25px;
+    color:#eee;   
+   letter-spacing:2px;
+   text-align:center;
+   text-transform:uppercase;
+   margin:0 !important;
+   padding-bottom:25px;
 }
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open Sans:400,600,800');
 h1,
@@ -157,7 +157,7 @@ body {
 
 .fa-heart {
     /* Font Awesome 아이콘 기본 스타일 */
-    font-size: 24px;
+    font-size: 50px;
     color : red;
 }
 .fa-times {
@@ -171,11 +171,9 @@ body {
         -1px -1px 0 currentColor,
         1px -1px 0 currentColor,
         -1px 1px 0 currentColor;
-    font-size: 26px;
+    font-size: 52px;
 
-    /* 아이콘을 2px만큼 위로 이동 */
-    position: relative;
-    top: -2px;
+  
 }
 
 .profile-card-2 .col-md-4{

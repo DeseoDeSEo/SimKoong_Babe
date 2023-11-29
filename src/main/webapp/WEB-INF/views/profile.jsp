@@ -13,7 +13,7 @@
 <html lang="en" style="background: white;">
 <head>
 <meta charset="utf-8">
-<title>SimKoong</title>
+<title>Babe</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -118,236 +118,85 @@ body {
 </style>
 </head>
 <body style="background: white;">
-	<div class="container-xxl bg-white p-0">
-		<jsp:include page="header.jsp"></jsp:include>
-		<!-- Navbar End -->
+	<jsp:include page="header.jsp"></jsp:include>
+	<br>
+	<br>
+	<div class="container">
+	<div class="main-body">
+		<div class="container-xl px-4 mt-4">
+			<div class="row">
+					<div class="col-xl-4">
+						<div class="card mb-4 mb-xl-0">
+							<div class="card-header">Profile Picture</div>
+							<div class="card-body text-center">
+								<!-- Profile picture image-->
+								<img class="img-account-profile rounded-circle mb-2"
+									src="img/team-1.jpg" alt="">
 
-
-		<!-- Header Start -->
-		<br> <br>
-		<%-- <form action ="${cpath}/update" method="post"> --%>
-		<!-- <div class="container">
-		          <div class="row">
-		              <div class="col-12 text-center">
-		                    <h2>Profile</h2>
-		              </div>
-		            </div> -->
-		<div class="container">
-			<div class="main-body">
-				<!-- Breadcrumb -->
-				<!--           <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-            </ol>
-          </nav> -->
-				<!-- /Breadcrumb -->
-
-				<div class="container-xl px-4 mt-4">
-					<!-- Account page navigation-->
-					<!--     <nav class="nav nav-borders">
-        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
-    </nav> -->
-					<!-- 
-    <hr class="mt-0 mb-4"> -->
-					<form>
-						<input type="hidden" name="_csrf" value="${_csrf.token}" />
-						<div class="row">
-							<div class="col-xl-4">
-								<!-- Profile picture card-->
 								<div class="card mb-4 mb-xl-0">
-									<div class="card-header">Profile Picture</div>
-									<div class="card-body text-center">
-										<!-- Profile picture image-->
-										<img class="img-account-profile rounded-circle mb-2"
-											src="img/team-1.jpg" alt="">
-										<!-- Profile picture help block-->
-										<div class="small font-italic text-muted mb-4">JPG or
-											PNG no larger than 5 MB</div>
-										<!-- Profile picture upload button-->
-										<button class="btn btn-primary" type="button">Upload
-											new image</button>
-									</div>
-								</div>
-								<br>
-								<div class="card mb-4 mb-xl-0">
-									<div class="card-header text-center">About me</div>
-									<div class="card-body">
-										<div class="small font-italic text-muted mb-4">
-											<textarea rows="9" cols="48"
-												style="border: none; resize: none; outline: none;">${mvo.aboutme}</textarea>
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-
-
-
-							<div class="col-xl-8">
-								<!-- Account details card-->
-								<div class="card mb-4">
-									<div class="card-header">Account Details</div>
-									<div class="card-body">
-										<form>
-											<!-- Form Group (username)-->
-											<div class="mb-3">
-												<label class="small mb-1" for="inputUsername">Nick</label> <input
-													class="form-control" id="inputUsername" type="text"
-													placeholder="Enter your username" value="${mvo.nickname}">
-											</div>
-											<!-- Form Row-->
-											<div class="row gx-3 mb-3">
-												<!-- Form Group (first name)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputFirstName">Age</label>
-													<input class="form-control" id="inputFirstName"
-														type="number" placeholder="Enter your first name"
-														value="${mvo.age}">
-												</div>
-												<!-- Form Group (last name)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputLastName">Phone</label>
-													<input class="form-control" id="inputLastName" type="tel"
-														placeholder="Enter your last name" value="${mvo.phone}">
-												</div>
-											</div>
-											<!-- Form Row        -->
-											<div class="row gx-3 mb-3">
-												<!-- Form Group (organization name)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputOrgName">Address</label>
-													<input class="form-control" id="inputOrgName" type="text"
-														placeholder="Enter your organization name"
-														value="${mvo.address[0].replace('[','')}">
-												</div>
-												<!-- Form Group (location)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputLocation">Interest</label>
-													<input class="form-control" id="inputLocation" type="text"
-														placeholder="Enter your location" value="${mvo.interest}">
-												</div>
-											</div>
-											<!-- Form Group (email address)-->
-											<div class="row gx-3 mb-3">
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputEmailAddress">MBTI</label>
-													<input class="form-control" id="inputEmailAddress"
-														type="text" placeholder="Enter your email address"
-														value="${mvo.mbti}">
-												</div>
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputPhone">Education</label>
-													<input class="form-control" id="inputPhone" type="text"
-														placeholder="Enter your phone number"
-														value="${mvo.school}">
-												</div>
-											</div>
-
-											<!-- Form Row-->
-											<div class="row gx-3 mb-3">
-												<!-- Form Group (phone number)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputPhone">Sport</label> <input
-														class="form-control" id="inputPhone" type="text"
-														placeholder="Enter your phone number" value="${mvo.sport}">
-												</div>
-												<!-- Form Group (birthday)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputBirthday">Smoke</label>
-													<input class="form-control" id="inputBirthday" type="text"
-														name="birthday" placeholder="Enter your birthday"
-														value="${mvo.smoking}">
-												</div>
-											</div>
-											<div class="row gx-3 mb-3">
-												<!-- Form Group (phone number)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputPhone">Dring</label> <input
-														class="form-control" id="inputPhone" type="text"
-														placeholder="Enter your phone number"
-														value="${mvo.drinking}">
-												</div>
-												<!-- Form Group (birthday)-->
-												<div class="col-md-6">
-													<label class="small mb-1" for="inputBirthday">Job</label> <input
-														class="form-control" id="inputBirthday" type="text"
-														name="birthday" placeholder="Enter your birthday"
-														value="${mvo.job}">
-												</div>
-											</div>
-											<!-- Save changes button-->
-											<button class="btn btn-primary" type="button">Save
-												changes</button>
-										</form>
-									</div>
+									<textarea class="border border-2 small mb-1"
+										style="resize: none; outline: none; width: 100%; max-width: 100%; height: auto;"
+										readonly>${mvo.aboutme}</textarea>
 								</div>
 							</div>
 						</div>
+						<br>
+						<!-- 상대방을 추천 받을 필터 부분 시작  -->
 
-					</form>
+						<div class="card mb-4 mb-xl-0">
+							<div class="card-header">Recommend Setting</div>
+							<div class="card-body"
+								style="display: flex; flex-direction: column; gap: 10px;">
+								<div class="small font-italic text-muted mb-4">
+									<form action="/filterUpdate" method="POST">
+										<input type="hidden" name="${_csrf.parameterName}"
+											value="${_csrf.token}" /> <label class="small mb-1"
+											for="inputGender">Gender</label>
+										<table class="">
+											<tr class="something">
+												<td width="50%">
+													<div class="form-check w-5">
+														<c:choose>
+															<c:when test="${filter.gender == 'Male'}">
+																<input class="form-check-input" type="radio"
+																	name="gender" id="male" value="Male" checked>
+															</c:when>
+															<c:otherwise>
+																<input class="form-check-input" type="radio"
+																	name="gender" id="male" value="Male">
+															</c:otherwise>
+														</c:choose>
+														<label class="form-check-label" for="flexRadioDefault1">
+															<span>Male</span>
+														</label>
+													</div>
+												</td>
 
-					<div class="card mb-4 mb-xl-0">
-						<div class="card-header">Recommend Setting</div>
-						<div class="card-body"
-							style="display: flex; flex-direction: column; gap: 10px;">
-							<div class="small font-italic text-muted mb-4">
-								<form action="/filterUpdate" method="POST">
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}" /> <label class="small mb-1"
-										for="inputGender">Gender</label>
-									<table class="">
-										<tr class="something">
-											<td width="50%">
-												<div class="form-check w-5">
-													<c:choose>
-														<c:when test="${filter.gender == 'Male'}">
-															<input class="form-check-input" type="radio"
-																name="gender" id="male" value="Male" checked>
-														</c:when>
-														<c:otherwise>
-															<input class="form-check-input" type="radio"
-																name="gender" id="male" value="Male">
-														</c:otherwise>
-													</c:choose>
-													<label class="form-check-label" for="flexRadioDefault1">
-														<span>Male</span>
-													</label>
-												</div>
+												<td width="50%">
+													<div class="form-check">
+														<c:choose>
+															<c:when test="${filter.gender == 'Female'}">
+																<input class="form-check-input" type="radio"
+																	name="gender" id="female" value="Female" checked>
+															</c:when>
+															<c:otherwise>
+																<input class="form-check-input" type="radio"
+																	name="gender" id="female" value="Female">
+															</c:otherwise>
+														</c:choose>
+														<label class="form-check-label" for="flexRadioDefault1">
+															<span>Female</span>
+														</label>
+													</div>
+												</td>
+											</tr>
+										</table>
 
-											</td>
-
-											<td width="50%">
-												<div class="form-check">
-													<c:choose>
-														<c:when test="${filter.gender == 'Female'}">
-															<input class="form-check-input" type="radio"
-																name="gender" id="female" value="Female" checked>
-														</c:when>
-														<c:otherwise>
-															<input class="form-check-input" type="radio"
-																name="gender" id="female" value="Female">
-														</c:otherwise>
-													</c:choose>
-													<label class="form-check-label" for="flexRadioDefault1">
-														<span>Female</span>
-													</label>
-												</div>
-											</td>
-										</tr>
 										<label class="large mb-1" for="inputDistance">Distance
-										</label>
-										<span id="distanceRangeValue" style="float: right;">${filter.maximum_distance}
-											km</span>
-
-										<input name="maximum_distance" type="range" class="form-range"
-											id="distanceRange" min="0" value="${filter.maximum_distance}"
-											max="500"
+										</label> <span id="distanceRangeValue" style="float: right;">${filter.maximum_distance}
+											km</span> <input name="maximum_distance" type="range"
+											class="form-range" id="distanceRange" min="0"
+											value="${filter.maximum_distance}" max="500"
 											oninput="document.getElementById('distanceRangeValue').innerHTML=this.value + ' km';">
 
 
@@ -370,60 +219,163 @@ body {
 										</div>
 										<button id="saveChangesButton" class="btn btn-primary"
 											style="float: right;" type="submit">설정 저장</button>
-										</form>
-										<script type="text/javascript">
-                     let lowerSlider = document.getElementById("lower");
-                     let upperSlider = document.getElementById("upper");
-                     
-                     //let output = document.getElementById("MinimumRangeValue");
-   
-                     function updateSliderValue() {
-                         if (parseInt(lowerSlider.value) > parseInt(upperSlider.value)) {
-                             let temp = lowerSlider.value;
-                             lowerSlider.value = upperSlider.value;
-                             upperSlider.value = temp;
-                         }
-                         
-                         document.getElementById('MinimumRangeValue').innerHTML=lowerSlider.value + " years old";
-                         document.getElementById('MaximumRangeValue').innerHTML=upperSlider.value + " years old";;
-   
-                         //output.innerHTML = `${lowerSlider.value} ~ ${upperSlider.value}`;
-                     }
-   
-                     lowerSlider.oninput = function() {
-                         updateSliderValue();
-                     };
-   
-                     upperSlider.oninput = function() {
-                         updateSliderValue();
-                     };
-                     
-                  
-                  </script>
+									</form>
+
+									<script type="text/javascript">
+         let lowerSlider = document.getElementById("lower");
+         let upperSlider = document.getElementById("upper");
+          function updateSliderValue() {
+        	  if (parseInt(lowerSlider.value) > parseInt(upperSlider.value)) {
+                  let temp = lowerSlider.value;
+                  lowerSlider.value = upperSlider.value;
+                  upperSlider.value = temp;
+              }
+              
+              document.getElementById('MinimumRangeValue').innerHTML=lowerSlider.value + " years old";
+              document.getElementById('MaximumRangeValue').innerHTML=upperSlider.value + " years old";;
+
+              //output.innerHTML = `${lowerSlider.value} ~ ${upperSlider.value}`;
+          }
+
+          lowerSlider.oninput = function() {
+              updateSliderValue();
+          };
+
+          upperSlider.oninput = function() {
+              updateSliderValue();
+          };
+   </script>
+								</div>
 							</div>
 						</div>
-						<!-- Header End -->
-
-
-						<!-- Back to Top -->
-						<a href="#"
-							class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
-							class="bi bi-arrow-up"></i></a>
 					</div>
+					<!-- Header End -->
+					<div class="col-xl-8">
+						<!-- Account details card-->
+						<div class="card mb-4">
+							<div class="card-header">Account Details</div>
+							<div class="card-body">
+								<form>
+									<!-- Form Group (username)-->
+									<div class="row gx-3 mb-3">
+									<div class="col-md-6">
+										<label class="small mb-1" for="inputUsername">Nick</label> <input
+											class="form-control" id="inputUsername" type="text"
+											placeholder="Enter your username" value="${mvo.nickname}">
+									</div>
+									<!-- Form Row-->
+									<div class="col-md-6">
+											<label class="small mb-1" for="inputFirstName">Gender</label>
+		                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="${mvo.sex}">
+		                            </div>
+		                            <div class="row gx-3 mb-3">
+		                            	<div class="col-md-6">
+										<!-- Form Group (first name)-->
+											<label class="small mb-1" for="inputFirstName">Age</label> <input
+												class="form-control" id="inputFirstName" type="number"
+												placeholder="Enter your first name" value="${mvo.age}">
+										</div>
+										<!-- Form Group (last name)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputLastName">Phone</label> <input
+												class="form-control" id="inputLastName" type="tel"
+												placeholder="Enter your last name" value="${mvo.phone}">
+										</div>
+									</div>
+									<!-- Form Row        -->
+									<div class="row gx-3 mb-3">
+										<!-- Form Group (organization name)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputOrgName">Address</label>
+											<input class="form-control" id="inputOrgName" type="text"
+												placeholder="Enter your organization name"
+												value="${mvo.address[0].replace('[','')}">
+										</div>
+										<!-- Form Group (location)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputLocation">Interest</label>
+											<input class="form-control" id="inputLocation" type="text"
+												placeholder="Enter your location" value="${mvo.interest}">
+										</div>
+									</div>
+									<!-- Form Group (email address)-->
+									<div class="row gx-3 mb-3">
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputEmailAddress">MBTI</label>
+											<input class="form-control" id="inputEmailAddress"
+												type="text" placeholder="Enter your email address"
+												value="${mvo.mbti}">
+										</div>
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputPhone">Education</label>
+											<input class="form-control" id="inputPhone" type="text"
+												placeholder="Enter your phone number" value="${mvo.school}">
+										</div>
+									</div>
 
-					<!-- JavaScript Libraries -->
-					<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-					<script
-						src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-					<script src="lib/wow/wow.min.js"></script>
-					<script src="lib/easing/easing.min.js"></script>
-					<script src="lib/waypoints/waypoints.min.js"></script>
-					<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+									<!-- Form Row-->
+									<div class="row gx-3 mb-3">
+										<!-- Form Group (phone number)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputPhone">Sport</label> <input
+												class="form-control" id="inputPhone" type="text"
+												placeholder="Enter your phone number" value="${mvo.sport}">
+										</div>
+										<!-- Form Group (birthday)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputBirthday">Smoke</label> <input
+												class="form-control" id="inputBirthday" type="text"
+												name="birthday" placeholder="Enter your birthday"
+												value="${mvo.smoking}">
+										</div>
+									</div>
+									<div class="row gx-3 mb-3">
+										<!-- Form Group (phone number)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputPhone">Drink</label> <input
+												class="form-control" id="inputPhone" type="text"
+												placeholder="Enter your phone number"
+												value="${mvo.drinking}">
+										</div>
+										<!-- Form Group (birthday)-->
+										<div class="col-md-6">
+											<label class="small mb-1" for="inputBirthday">Job</label> <input
+												class="form-control" id="inputBirthday" type="text"
+												name="birthday" placeholder="Enter your birthday"
+												value="${mvo.job}">
+										</div>
+									</div>
+									<br>
+									<!-- Save changes button-->
+									<button class="btn btn-primary" type="button" >Save
+										changes</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+				</div>
+				
+				  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background: pink; border-color: pink;"><i class="bi bi-arrow-up"></i></a>
+    </div>
 
-					<!-- Template Javascript -->
-					<script src="js/main.js"></script>
+			
 
-					<script>
+
+				<!-- JavaScript Libraries -->
+				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+				<script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+				<script src="lib/wow/wow.min.js"></script>
+				<script src="lib/easing/easing.min.js"></script>
+				<script src="lib/waypoints/waypoints.min.js"></script>
+				<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+				<!-- Template Javascript -->
+				<script src="js/main.js"></script>
+
+				<script>
        
        function uploadImage() {
             const input = document.getElementById('uploadInput');
