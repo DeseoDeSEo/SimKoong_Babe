@@ -164,38 +164,33 @@ body {
 	background: none;
 	border: none;
 }
+ a.slide__prev,
+  a.slider::before {
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
+    z-index: 1;
+  }
 
-a.slide__prev, a.slider::before {
-	/* 왼쪽 화살표 실제기능 구현 영역 */
-	position:relative;
-	width:90px;
-	height: 300px;
-	top: 100%;
-	left: 50px;
-}
+  a.slide__next,
+  a.slider::after {
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
+    z-index: 1;
+  }
 
-a.slide__next, a.slider::after {
-	/* 오른쪽 화살표 실제기능 구현 영역 */
-	width:90px;
-	height: 300px;
-}
-
-a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
-	/* 기능 구현 화살표 */
-	position: absolute;
-	top: 100%;
-	width:90px;
-	height: 300px;
-	box-sizing: border-box;
-	opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
-	pointer-events: none; 
-}
 
 .slider::before, .slider::after {
 	content: "";
 	z-index: 1;
 	background: none;
-	pointer-events: none;
 }
 
 .image-box {
@@ -268,10 +263,12 @@ a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
 															<a id="slide__prev" class="slide__prev"
 																href="#slides__${i.count-1}" title="prev"></a>
 															<a id="slide__next" class="slide__next"
-																href="#slides__${i.count+1}" title="Next"></a>
+																href="#slides__${i.count+1}" title="Next"></a>							
 														</c:otherwise>
-													</c:choose>
+														
+													</c:choose>													
 												</div>
+																			
 											</c:forEach>
 
 										</div>
@@ -279,10 +276,22 @@ a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
 
 								</div>
 								<br>
-								<h5>
-								     <span class="nickname">${mvo.nickname}, </span><span class="age">${mvo.age}</span>
-								</h5>							
-									<span>${mvo.address[0].replace('[','')}</span>								
+								<div class="row">
+									<div class="col-xl" >	
+									     <span class="nickname" >${recommendUser.nickname}, </span><span class="age">${recommendUser.age}</span>
+									     <br>
+									     <span style="text-align: left;" >${recommendUser.address[0].replace('[','')}</span>
+									</div>
+									<div class="col-xl">					
+										<div class="small font-italic text-muted mb-4" style="margin-bottom:50px; left:50px;">	
+											<a id="heart" style="position: absolute; z-index: 2000; font-size:50px; left:55%; color:#ff8cb9;" href="/recommendLike?oppUserName=${recommendUser.username}"><i class="fa fa-heart"></i></a>
+		                    			    <a href="/recommendDislike?oppUserName=${recommendUser.username}" style="position: absolute; bottom:7.5%; z-index: 2000; font-size:59px; color:#747d8c;"><i class="fa fa-times"></i></a>
+		                    			</div>
+								    </div>
+										
+		                    	</div>  
+		                    	 
+																
 							</div>
 						</div>
 						<br>
@@ -298,24 +307,24 @@ a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
 										<!-- Form Row-->
 										<div class="col-md-6">
 											<label class="small mb-1">Gender</label> 
-											<input class="form-control" type="text" placeholder="-- 비공개 --"  value="${mvo.sex}"> 
+											<input class="form-control" type="text" placeholder="-- 비공개 --"  value="${recommendUser.sex}"> 
 										</div>
 										<div class="col-md-6">
 											<label class="small mb-1">Job</label> <input
 												class="form-control" type="text" 
-												placeholder="--입력 안 됨--"  value="${mvo.job}">
+												placeholder="--입력 안 됨--"  value="${recommendUser.job}">
 										</div>		
 									</div>
 									<div class="row gx-3 mb-3">
 										<div class="col-md-6">
 											<label class="small mb-1">Education</label> <input
 												class="form-control" type="text" placeholder="--입력 안 됨--"
-												value="${mvo.school}">
+												value="${recommendUser.school}">
 										</div>
 										<div class="col-md-6">
 											<label class="small mb-1">Interest</label> <input
 												class="form-control" type="text" placeholder="--입력 안 됨--"
-												value="${mvo.interest}">
+												value="${recommendUser.interest}">
 										</div>
 									</div>
 
@@ -325,12 +334,12 @@ a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
 											<label class="small mb-1" >MBTI</label>
 											<input class="form-control" 
 												type="text" placeholder="--입력 안 됨--" 
-												value="${mvo.mbti}">
+												value="${recommendUser.mbti}">
 										</div>
 										<div class="col-md-6">
 											<label class="small mb-1" >Drink</label>
 											<input class="form-control" type="text"
-												placeholder="--입력 안 됨--" value="${mvo.drinking}">
+												placeholder="--입력 안 됨--" value="${recommendUser.drinking}">
 										
 										</div>
 									</div>
@@ -338,21 +347,21 @@ a.slider::before, a.slider::after, a.slide__prev, a.slide__next {
 										<div class="col-md-6">
 											<label class="small mb-1" >Sport</label> <input
 												class="form-control" type="text"
-												placeholder="--입력 안 됨--" value="${mvo.sport}">
+												placeholder="--입력 안 됨--" value="${recommendUser.sport}">
 										</div>
 										<!-- Form Group (birthday)-->
 										<div class="col-md-6">
 											<label class="small mb-1" >Smoke</label> <input
 												class="form-control"  type="text"
 												placeholder="--입력 안 됨--"
-												value="${mvo.smoking}">
+												value="${recommendUser.smoking}">
 										</div>
 									</div>
 									<div class="row gx-3 mb-3">
 										<label class="small mb-1">AboutMe</label>
 										<textarea class="border border-2 small mb-1" rows="5"
 											style="resize: none; outline: none; width: 100%; max-width: 100%; height: auto; border-radius: 15px;"
-											readonly>${mvo.aboutme}</textarea>
+											readonly>${recommendUser.aboutme}</textarea>
 									</div></div>
 									<br>
 									<!-- Save changes button-->
