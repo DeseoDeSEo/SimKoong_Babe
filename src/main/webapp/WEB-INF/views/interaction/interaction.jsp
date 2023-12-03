@@ -14,7 +14,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>Makaan - Real Estate HTML Template</title>
+<title>Babe-베이브</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -84,30 +84,94 @@
 									</div>
 									<div class="backside">
 										<div class="card">
-											<div class="card-body text-center mt-4">
-												<h4 class="card-title">Sunlimetech</h4>
-												<p class="card-text">This is basic card with image on
-													top, title, description and button.This is basic card with
-													image on top, title, description and button.This is basic
-													card with image on top, title, description and button.</p>
-												<ul class="list-inline">
-													<li class="list-inline-item"><a
-														class="social-icon text-xs-center" target="_blank"
-														href="#"> <i class="fa fa-facebook"></i>
-													</a></li>
-													<li class="list-inline-item"><a
-														class="social-icon text-xs-center" target="_blank"
-														href="#"> <i class="fa fa-twitter"></i>
-													</a></li>
-													<li class="list-inline-item"><a
-														class="social-icon text-xs-center" target="_blank"
-														href="#"> <i class="fa fa-skype"></i>
-													</a></li>
-													<li class="list-inline-item"><a
-														class="social-icon text-xs-center" target="_blank"
-														href="#"> <i class="fa fa-google"></i>
-													</a></li>
-												</ul>
+											<div class="card-body text-center mt-4"
+												style="text-align: left; overflow-y: auto;">
+												<h4 class="card-title">${matchedUser.nickname}</h4>
+												<p class="card-text">${matchedUser.aboutme}</p>
+
+
+												<c:if test="${not empty matchedUser.address}">
+													<div style="background-color: #007bff;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-home"></i> 
+														&nbsp;&nbsp;${matchedUser.address[0]}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.age}">
+													<div style="background-color: #6610f2;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-birthday-cake"></i> 
+														&nbsp;&nbsp;${matchedUser.age}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.drinking}">
+													<div style="background-color: #6f42c1;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-beer"></i> 
+														&nbsp;&nbsp;${matchedUser.drinking}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.interest}">
+													<div style="background-color: #e83e8c;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-book"></i> 
+														&nbsp;&nbsp;${matchedUser.interest}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.job}">
+													<div style="background-color: #dc3545;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-laptop-code"></i> 
+														&nbsp;&nbsp;${matchedUser.job}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.mbti}">
+													<div style="background-color: #fd7e14;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-chess"></i> 
+														&nbsp;&nbsp;${matchedUser.mbti}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.school}">
+													<div style="background-color: #28a745;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-school"></i> 
+														&nbsp;&nbsp;${matchedUser.school}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.sex}">
+													<div style="background-color: #20c997;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-male"></i> 
+														&nbsp;&nbsp;${matchedUser.sex}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.smoking}">
+													<div style="background-color: #17a2b8;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-smoking"></i> 
+														&nbsp;&nbsp;${matchedUser.smoking}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty matchedUser.sport}">
+													<div style="background-color: #6c757d;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-futbol"></i> 
+														&nbsp;&nbsp;${matchedUser.sport}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												
+
 											</div>
 										</div>
 									</div>
@@ -141,18 +205,94 @@
 									</div>
 									<div class="backside">
 										<div class="card">
-											<div class="card-body text-center mt-4">
-												<h4 class="card-title">Sunlimetech</h4>
-												<div style="background-color: #00c851; margin: 5 5 5 5"
-													class="chip chip-md success-color white-text  example z-depth-2 mr-0">
-													<i class="fas fa-tags "></i> &nbsp;&nbsp;Web Design <i
-														class="close white-text fas fa-times"></i>
-												</div>
-												<div style="background-color: #00c851; margin: 5 5 5 5"
-													class="chip chip-md success-color white-text  example z-depth-2 mr-0">
-													<i class="fas fa-tags "></i> &nbsp;&nbsp;Web Design <i
-														class="close white-text fas fa-times"></i>
-												</div>
+											<div class="card-body text-center mt-4"
+												style="text-align: left; overflow-y: auto;">
+												<h4 class="card-title">${likedUser.nickname}</h4>
+												<p class="card-text">${likedUser.aboutme}</p>
+
+
+												<c:if test="${not empty likedUser.address}">
+													<div style="background-color: #007bff;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-home"></i> 
+														&nbsp;&nbsp;${likedUser.address[0]}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.age}">
+													<div style="background-color: #6610f2;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-birthday-cake"></i> 
+														&nbsp;&nbsp;${likedUser.age}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.drinking}">
+													<div style="background-color: #6f42c1;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-beer"></i> 
+														&nbsp;&nbsp;${likedUser.drinking}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.interest}">
+													<div style="background-color: #e83e8c;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-book"></i> 
+														&nbsp;&nbsp;${likedUser.interest}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.job}">
+													<div style="background-color: #dc3545;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-laptop-code"></i> 
+														&nbsp;&nbsp;${likedUser.job}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.mbti}">
+													<div style="background-color: #fd7e14;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-chess"></i> 
+														&nbsp;&nbsp;${likedUser.mbti}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.school}">
+													<div style="background-color: #28a745;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-school"></i> 
+														&nbsp;&nbsp;${likedUser.school}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.sex}">
+													<div style="background-color: #20c997;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-male"></i> 
+														&nbsp;&nbsp;${likedUser.sex}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.smoking}">
+													<div style="background-color: #17a2b8;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-smoking"></i> 
+														&nbsp;&nbsp;${likeUser.smoking}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												<c:if test="${not empty likedUser.sport}">
+													<div style="background-color: #6c757d;"
+														class="chip chip-md success-color white-text  example z-depth-2 mr-0">
+														<i class="fas fa-futbol"></i> 
+														&nbsp;&nbsp;${likedUser.sport}
+													</div>
+													<div style="width: 5px; display: inline;">&nbsp;</div>
+												</c:if>
+												
+
 											</div>
 										</div>
 									</div>
@@ -294,108 +434,7 @@
 		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
 			class="bi bi-arrow-up"></i></a>
 
-		<!-- footer start -->
-		<div
-			class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn"
-			data-wow-delay="0.1s">
-			<div class="container py-5">
-				<div class="row g-5">
-					<div class="col-lg-3 col-md-6">
-						<h5 class="text-white mb-4">Get In Touch</h5>
-						<p class="mb-2">
-							<i class="fa fa-map-marker-alt me-3"></i>123 Street, New York,
-							USA
-						</p>
-						<p class="mb-2">
-							<i class="fa fa-phone-alt me-3"></i>+012 345 67890
-						</p>
-						<p class="mb-2">
-							<i class="fa fa-envelope me-3"></i>info@example.com
-						</p>
-						<div class="d-flex pt-2">
-							<a class="btn btn-outline-light btn-social" href=""><i
-								class="fab fa-twitter"></i></a> <a
-								class="btn btn-outline-light btn-social" href=""><i
-								class="fab fa-facebook-f"></i></a> <a
-								class="btn btn-outline-light btn-social" href=""><i
-								class="fab fa-youtube"></i></a> <a
-								class="btn btn-outline-light btn-social" href=""><i
-								class="fab fa-linkedin-in"></i></a>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<h5 class="text-white mb-4">Quick Links</h5>
-						<a class="btn btn-link text-white-50" href="">About Us</a> <a
-							class="btn btn-link text-white-50" href="">Contact Us</a> <a
-							class="btn btn-link text-white-50" href="">Our Services</a> <a
-							class="btn btn-link text-white-50" href="">Privacy Policy</a> <a
-							class="btn btn-link text-white-50" href="">Terms & Condition</a>
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<h5 class="text-white mb-4">Photo Gallery</h5>
-						<div class="row g-2 pt-2">
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-1.jpg" alt="">
-							</div>
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-2.jpg" alt="">
-							</div>
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-3.jpg" alt="">
-							</div>
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-4.jpg" alt="">
-							</div>
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-5.jpg" alt="">
-							</div>
-							<div class="col-4">
-								<img class="img-fluid rounded bg-light p-1"
-									src="img/property-6.jpg" alt="">
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<h5 class="text-white mb-4">Newsletter</h5>
-						<p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-						<div class="position-relative mx-auto" style="max-width: 400px;">
-							<input class="form-control bg-transparent w-100 py-3 ps-4 pe-5"
-								type="text" placeholder="Your email">
-							<button type="button"
-								class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="container">
-				<div class="copyright">
-					<div class="row">
-						<div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-							&copy; <a class="border-bottom" href="#">Your Site Name</a>, All
-							Right Reserved.
-
-							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-							Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML
-								Codex</a>
-						</div>
-						<div class="col-md-6 text-center text-md-end">
-							<div class="footer-menu">
-								<a href="">Home</a> <a href="">Cookies</a> <a href="">Help</a> <a
-									href="">FQAs</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
+		
 	<!-- JavaScript Libraries -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
@@ -427,6 +466,21 @@
 						}, 500); // 0.5초 딜레이 후 콘텐츠 추가
 			}
 		};
+		
+		document.addEventListener("DOMContentLoaded", function(){
+		    var flipContainers = document.querySelectorAll('.image-flip');
+
+		    flipContainers.forEach(function(container) {
+		        container.addEventListener('click', function() {
+		            if (container.classList.contains('click')) {
+		                container.classList.remove('click');
+		            } else {
+		                container.classList.add('click');
+		            }
+		        });
+		    });
+		});
+		
 	</script>
 
 

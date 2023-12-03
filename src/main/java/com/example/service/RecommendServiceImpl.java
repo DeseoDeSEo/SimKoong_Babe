@@ -20,8 +20,12 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
+import com.example.entity.Filter;
+import com.example.entity.Imgsimilarity;
 import com.example.entity.Info;
 import com.example.entity.Interaction;
+import com.example.entity.Rating;
+import com.example.tools.DistanceCalculator;
 
 @Service
 public class RecommendServiceImpl implements RecommendService {
@@ -32,6 +36,13 @@ public class RecommendServiceImpl implements RecommendService {
 	@Autowired
 	AmazonS3 s3client;
 
+	@Autowired
+	RatingService ratingService;
+	
+	@Autowired
+	ImgsimilarityService imgsimilarityService;  
+	
+	DistanceCalculator distanceCalculator;
 	@Override
 	public Info getRecommendUsers(String username) {
 		// info : 현재 세션에서 받아온 info.
@@ -40,8 +51,10 @@ public class RecommendServiceImpl implements RecommendService {
 		String myName = username;
 
 		DriverConfigLoader loader = dbService.getConnection();
+		
 		List<Info> allUsers = dbService.findAll(loader, Info.class);
-
+		List<Info> myInfo = dbService.findAllByColumnValue(loader, Info.class, "username", myName);
+		List<Filter> userFilter = dbService.findAllByColumnValue(loader, Filter.class, "username", myName);
 		/*
 		 * 내가 좋아요를 누르거나 싫어요를 누른 사람들은 정보가 뜨지 않아야함 type = 'like' 또는 'dislike' from_to =
 		 * 'to'
@@ -67,18 +80,67 @@ public class RecommendServiceImpl implements RecommendService {
 		List<String> alreadyDoneUsernames = allInteractions.stream().map(Interaction::getOpponent_username)
 				.collect(Collectors.toList());
 		
+		
+		
+		// 추천시스템(미구현) 85~
+//		List<Rating> ratings = ratingService.selectRating(username);
+//		if(!ratings.isEmpty()) {
+//			List<Imgsimilarity> similarity = dbService.findAllByColumnValue(loader, Imgsimilarity.class, "username", ratings.get(0).getUsername());
+//			
+//			if(!similarity.isEmpty()) {
+//				// 내림차순 정렬
+//				Collections.sort(similarity, (o1, o2) -> Float.compare(o2.getSimilarity_score(), o1.getSimilarity_score()));
+//				List<List<Info>> sUserList = new ArrayList<List<Info>>();
+//				for(Imgsimilarity s : similarity) {
+//					
+//					sUserList.add(dbService.findAllByColumnValue(loader, Info.class, "username", s.getUsername()));
+//				}
+//				List<Info> sUser = new ArrayList<Info>();
+//
+//			}
+//		}
+		//
+		
+		
 		// 필터링 조건을 적용하여 조건에 맞는 사용자만 추출
 		List<Info> filteredUsers = allUsers.stream()
-		                                   .filter(user -> !user.getUsername().equals(myName)) // 현재 사용자 제외
-		                                   .filter(user -> user.getPhoto() != null) // 사진이 null이 아닌 사용자
-		                                   .filter(user -> !alreadyDoneUsernames.contains(user.getUsername())) // alreadyDoneUsernames에 포함되지 않은 사용자
-		                                   .collect(Collectors.toList());
-
+													.filter(user -> !user.getUsername().equals(myName)) // 현재 사용자 제외
+													.filter(user -> user.getPhoto() != null) // 사진이 null이 아닌 사용자
+													.filter(user -> !alreadyDoneUsernames.contains(user.getUsername())) // alreadyDoneUsernames에 포함되지 않은 사용자
+													.filter(user -> user.getAddress() != null) // 주소가 null이 아닌 사용자
+													.filter(user -> user.getSex() != null) // 성별이 null이 아닌 사용자
+													.filter(user -> user.getAge() != 0) // 나이를 입력한 사용자
+													.filter(user -> !alreadyDoneUsernames.contains(user.getUsername())) // alreadyDoneUsernames에 포함되지 않은 사용자
+													.filter(user -> user.getAge() >= userFilter.get(0).getAge_range().get(0)) // 필터의 최소 나이보다 같거나 많은 사용자 
+													.filter(user -> user.getAge() <= userFilter.get(0).getAge_range().get(1)) // 필터의 최대 나이보다 같거나 적은 사용자
+													.filter(user -> user.getSex().equals(userFilter.get(0).getGender()) ) //필터의 성별과 같은 유저 추천
+													.collect(Collectors.toList());
+		if(!myInfo.get(0).getAddress().isEmpty()){
+			String myLatitude = myInfo.get(0).getAddress().get(1);
+			String myLongitude = myInfo.get(0).getAddress().get(2);
+		
+			//내 주소가 있다면 거리기반 필터링
+			distanceCalculator = new DistanceCalculator();
+		
+			try {
+			filteredUsers = filteredUsers.stream().filter(user -> userFilter.get(0)
+					.getMaximum_distance() >= distanceCalculator
+					.calculateDistanceInKilometer(myLatitude,myLongitude,user.getAddress().get(1) 
+							,user.getAddress().get(2) )).collect(Collectors.toList()); // 필터의 최대거리보다 작거나 같은 거리의 유저만 추천
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+		}
+		
 		// 랜덤으로 5명을 선택
 		Collections.shuffle(filteredUsers);
 		List<Info> recommendUsers = filteredUsers.stream().limit(5).collect(Collectors.toList());
-
-		return recommendUsers.get(0);
+		
+		if (recommendUsers.size() == 0) {
+			return null;
+		} else {
+			return recommendUsers.get(0);
+		}
 	}
 
 	@Override

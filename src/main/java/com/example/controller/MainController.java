@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -33,12 +32,16 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
+import com.example.aws.EC2Migration;
 import com.example.entity.AddressData;
 import com.example.entity.Filter;
 import com.example.entity.Info;
+import com.example.security.CustomUser;
 import com.example.service.DBService;
+import com.example.service.FileService;
 import com.example.service.FilterService;
 import com.example.service.InfoService;
+import com.example.service.RecommendService;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -54,7 +57,11 @@ public class MainController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
-	 private FilterService filterService;
+	RecommendService recommendService;
+	@Autowired
+	private FilterService filterService;
+	@Autowired
+    private FileService fileService;
 
 	@GetMapping("/")
 	public String showMainPage() {
@@ -123,11 +130,15 @@ public class MainController {
 	public String showJoinPage(@RequestParam("nickname") String nickname, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
 
+		System.out.println("[MainController][/join]");
+
 		infoService.InsertInfo(nickname, username, passwordEncoder.encode(password));
 		DriverConfigLoader loader = dbService.getConnection(); // db연결
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", username);
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
+
+		filterService.joinFilter(username);
 
 		if (listInfo.size() == 0) {
 			return "redirect:join";
@@ -138,7 +149,7 @@ public class MainController {
 
 	@GetMapping("/photoUpload") // 사진 업로드 하는 페이지로 이동
 	public String showInfoPage(Model model) {
-		System.out.println("사진입력으로 들어왔음.");
+		System.out.println("[MainController][/photoUpload]");
 		// 사진 출력되는 곳
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -146,11 +157,7 @@ public class MainController {
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> infos = dbService.findAllByColumnValue(loader, Info.class, "username", username);
 		Info userInfo = (Info) infos.get(0);
-		
-		//필터
-		List<Filter> filters = dbService.findAllByColumnValue(loader, Filter.class, "username", username);
-	     Filter userFilter = (Filter) filters.get(0);
-		
+
 		Map<Integer, String> photoMap = userInfo.getPhoto();
 		List<String> imageDatas = new ArrayList<>();
 		// aws에서 가져오기
@@ -179,12 +186,13 @@ public class MainController {
 		}
 		model.addAttribute("imageDatas", imageDatas);
 		model.addAttribute("imageData", base64Encoded);
-		model.addAttribute("filter", userFilter);
 		return "photoUpload";
 	}
 
-	@PostMapping("/photoUpload")// 사진 업로드 하는 페이지에서 index로 이동함.
+	@PostMapping("/photoUpload") // 사진 업로드 하는 페이지에서 index로 이동함.
 	public String showInfoPage(Info info, HttpServletRequest request) {
+		System.out.println("[MainController][/photoUpload]");
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username_session = authentication.getName();
 		infoService.InsertInfoAdditional(info, username_session);
@@ -192,89 +200,31 @@ public class MainController {
 
 	}
 
-	// 사진 업로드 하는 페이지에서 form태그 파일 업로드
 	@PostMapping("/fileUpload")
-	public String fileUpload(Info info, @RequestParam("file") MultipartFile file,
-			@RequestParam("photoNum") int photoNum, HttpServletRequest request) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username_session = authentication.getName();
-		String originalFilename = null;
-		String uploadedFilePath_aws = null;
-		try {
-			String uploadedFilePath = null;
-			// 업로드된 파일 처리
-			if (!file.isEmpty()) {
-				originalFilename = file.getOriginalFilename();
-				// 파일 저장 경로 및 이름 설정
-				System.out.println(originalFilename);
-				String filePath_aws = "s3://simkoong-s3/" + originalFilename;
-				String filePath = request.getServletContext().getRealPath("/" + originalFilename);
-				System.out.println(filePath);
-				File dest = new File(filePath);
-
-				System.out.println(dest);
-				// 파일 저장
-				file.transferTo(dest);
-				// 이미지 리사이징
-				BufferedImage originalImage = ImageIO.read(dest);
-				BufferedImage resizedImage = Thumbnails.of(originalImage)
-											.size(640,360)
-											.outputFormat("jpg")
-											.asBufferedImage();
-				File resizedFile = new File(filePath);
-				ImageIO.write(resizedImage, "jpg", resizedFile);
-				// 파일 경로에서 역슬래시 바꾸는 곳.
-				filePath = filePath.replace("\\\\", "/");
-				uploadedFilePath = filePath.replace("\\", "/");
-
-				filePath_aws = filePath_aws.replace("\\\\", "/");
-				uploadedFilePath_aws = filePath_aws.replace("\\", "/");
-
-			}
-			// AWS S3 관련 코드
-			File fileForS3 = new File(uploadedFilePath);
-			String bucketName = "simkoong-s3";
-			String fileName = originalFilename;
-			s3client.putObject(new PutObjectRequest(bucketName, fileName, fileForS3));
-
-			// listinfo 정보 전체 가져오기
-			Map<String, Object> columnValues = new HashMap<>();
-			columnValues.put("username", username_session);
-
-			DriverConfigLoader loader = dbService.getConnection();
-			List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
-
-			// 업데이트할 정보를 Map형식의 photo에 넣기.
-			Map<Integer, String> photo = listInfo.get(0).getPhoto();
-			photo.put(photoNum, uploadedFilePath_aws);
-
-			// 어디를 업데이트할지, 값은 뭔지를 설정하기
-			Map<String, Object> whereUpdate = new HashMap<>();
-			Map<String, Object> updateValue = new HashMap<>();
-
-			whereUpdate.put("username", username_session);
-			updateValue.put("photo", photo);
-
-			// 업데이트 진행
-			dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-//		infoService.fileUpload(additionalFile, username_session);
-		return "redirect:/photoUpload";
-	}
-
+    public String fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("photoNum") int photoNum,
+                             HttpServletRequest request) {
+		System.out.println("[MainController][/fileUpload]");
+        
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        fileService.handleFileUpload(file, photoNum, username);
+        return "redirect:/photoUpload";
+    }
+	
 	@GetMapping("/profile")
 	public String showProfilePage(Model model) {
-		
-		System.out.println("마이페이지로 들어왔음.");
-		// 사진 출력되는 곳	
+		System.out.println("[MainController][/profile]");
+		// 사진 출력되는 곳
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> infos = dbService.findAllByColumnValue(loader, Info.class, "username", username);
+		System.out.println("[infos : ]" + infos.toString());
 		Info userInfo = (Info) infos.get(0);
+		List<Filter> filters = dbService.findAllByColumnValue(loader, Filter.class, "username", username);
+		System.out.println("[filters : ]" + filters.toString());
+		Filter userFilter = filters.get(0);
+
 		Map<Integer, String> photoMap = userInfo.getPhoto();
 		List<String> imageDatas = new ArrayList<>();
 		String bucketName = "simkoong-s3";
@@ -300,21 +250,22 @@ public class MainController {
 			}
 		}
 		model.addAttribute("imageDatas", imageDatas);
-		model.addAttribute("mvo", userInfo);		
+		model.addAttribute("mvo", userInfo);
+		model.addAttribute("filter", userFilter);
 		return "profile";
 	}
 
 	@GetMapping("/update")
-	public String showUpdatePage(Info info, Model model,HttpSession session) {
+	public String showUpdatePage(Info info, Model model, HttpSession session) {
 		System.out.println("수정페이지로 들어왔음.");
-		
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> infos = dbService.findAllByColumnValue(loader, Info.class, "username", username);
 		Info userInfo = (Info) infos.get(0);
 		session.setAttribute("mvo_session", userInfo);
-		
+
 		Map<Integer, String> photoMap = userInfo.getPhoto();
 		List<String> imageDatas = new ArrayList<>();
 		String bucketName = "simkoong-s3";
@@ -340,14 +291,16 @@ public class MainController {
 			}
 		}
 		model.addAttribute("imageDatas", imageDatas);
-	
+
 		return "update";
 	}
 
 	@PostMapping("/update")
-	public String update(Info info, Model model) {
+	public String update(Info info) {
+		System.out.println("[MainController][@PostMapping/update]");
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 		String username_session = authentication.getName();
 		DriverConfigLoader loader = dbService.getConnection();
 		Map<String, Object> columnValues = new HashMap<>();
@@ -370,84 +323,67 @@ public class MainController {
 		updateValue.put("job", info.getJob());
 		updateValue.put("school", info.getSchool());
 		updateValue.put("aboutme", info.getAboutme());
+		updateValue.put("sex", info.getSex());
+		updateValue.put("isFirst", false);
 
 		// 업데이트 진행
 		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
-		model.addAttribute("mvo",info);
-
-		return "redirect:/update";
+		
+		// isFirst 값 업데이트
+		// 현재 인증된 사용자가 CustomUser 타입인지 확인
+		if (authentication.getPrincipal() instanceof CustomUser) {
+		    CustomUser customUser = (CustomUser) authentication.getPrincipal();
+		    customUser.setIsFirst(false);
+		}
+		
+		return "redirect:/profile";
 	}
 
 	@GetMapping("/location")
 	public String locationPage() {
-		System.out.println("위치 정보 확인");	
+		System.out.println("위치 정보 확인");
 		return "location";
 	}
+
 	@PostMapping("/location")
-    public ResponseEntity<String> receiveAddress(@RequestBody AddressData addressData, Info info, HttpSession session, Model model) {
-        System.out.println("[MainController][/location]");
+	public ResponseEntity<String> receiveAddress(@RequestBody AddressData addressData, Info info, HttpSession session,
+			Model model) {
+		System.out.println("[MainController][/location]");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username_session = authentication.getName();
 		DriverConfigLoader loader = dbService.getConnection();
 		Map<String, Object> columnValues = new HashMap<>();
 		columnValues.put("username", username_session);
 		List<Info> listInfo = dbService.findAllByColumnValues(loader, Info.class, columnValues);
-		
+
 		Map<String, Object> whereUpdate = new HashMap<>();
 		Map<String, Object> updateValue = new HashMap<>();
-		
+
 		String roadAddress = addressData.getRoadAddress();
-		String cityName = addressData.getCityName(); 
-		String latitude =addressData.getLatitude();
+		String cityName = addressData.getCityName();
+		String latitude = addressData.getLatitude();
 		String longitude = addressData.getLongitude();
-        // 예시로 받은 데이터를 콘솔에 출력해보겠습니다.
-        System.out.println("도로명 주소: " + roadAddress);
-        System.out.println("도시명: " + cityName);
-        System.out.println("경도 "+ latitude);
-        System.out.println("위도 "+ longitude);
-        
-        List<String> addressList= new ArrayList<>();
+		// 예시로 받은 데이터를 콘솔에 출력해보겠습니다.
+		System.out.println("도로명 주소: " + roadAddress);
+		System.out.println("도시명: " + cityName);
+		System.out.println("경도 " + latitude);
+		System.out.println("위도 " + longitude);
+
+		List<String> addressList = new ArrayList<>();
 		addressList.add(roadAddress);
 		addressList.add(latitude);
 		addressList.add(longitude);
-		
+
 		whereUpdate.put("username", username_session);
 		updateValue.put("address", addressList);
-		
+
 		dbService.updateByColumnValues(loader, Info.class, updateValue, whereUpdate);
 		List<Info> infos = dbService.findAllByColumnValue(loader, Info.class, "username", username_session);
 		session.setAttribute("mvo_session", infos.get(0));
-	
-     // 클라이언트에게 JSON 형태로 응답을 보냅니다.
-        String response = "{\"message\": \"주소 정보를 성공적으로 받았습니다.\"}";
-        return ResponseEntity.ok(response);
-    }
-	
-	 @PostMapping("/filterUpdate")
-     public String filterUpdate(RedirectAttributes redirectAttributes, Model model, @RequestParam("gender") String gender,@RequestParam("maximum_distance") int maximum_distance, @RequestParam("lower") int lower, @RequestParam("upper") int upper) {
-          List<Integer> age_range = new ArrayList<>();
-          age_range.add(lower); // 0번 자리에 최소연령 추가
-          age_range.add(upper); // 1번 자리에 최대연령 추가
-          
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Filter filter = new Filter(username,age_range,gender,maximum_distance);
-        filterService.updateFilter(filter);
-        DriverConfigLoader loader = dbService.getConnection();
-        List<Info> infos = dbService.findAllByColumnValue(loader, Info.class, "username", username);
-        Info userInfo = (Info) infos.get(0);
 
-        redirectAttributes.addFlashAttribute("filter", filter);
-        redirectAttributes.addFlashAttribute("mvo", userInfo);
-        
-        return "redirect:/profile";
-     }
-	   
-	@GetMapping("/test")
-	public String testPage() {
-		System.out.println("위치 정보 확인");	
-		return "test";
+		// 클라이언트에게 JSON 형태로 응답을 보냅니다.
+		String response = "{\"message\": \"주소 정보를 성공적으로 받았습니다.\"}";
+		return ResponseEntity.ok(response);
 	}
-	
 
 }

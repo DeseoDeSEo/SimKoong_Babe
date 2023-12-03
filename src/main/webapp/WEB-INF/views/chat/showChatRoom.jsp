@@ -13,7 +13,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Makaan - Real Estate HTML Template</title>
+    <title>Babe-베이브</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
@@ -48,27 +48,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <!-- 채팅관련 모듈 불러오기 끝 -->
     
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    
+    
 </head>
 
 <body>
     <div class="container-xxl bg-white p-0">
         <jsp:include page="../header.jsp"></jsp:include>
+        
+        
         <!-- 채팅방 보여주기 기능  -->
         
-        
-		<section style="background-color: #eee;">
-		  <div class="container py-5">
+		<section style="background-color: #ffffff;">
+	
+		<c:if test="${empty chatRoomNotifications }">
+		
+		<div class="container">
+				<div id="randomImage" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+					<img src="img/x/x3.png" style="width: 60%; display: block; ">
+					<p style="color: #ff8cb9; font-size: 70px; margin-top: 20px; font-family: 'Nanum Pen Script';">채팅이 없습니다</p>
+				</div>
+			</div>
+		
+		</c:if>
+		<c:if test="${not empty chatRoomNotifications }">
+		
+		<div class="container py-5">
 		
 		    <div class="row">
 		
 		      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 		
-		        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
-		
-		        <div class="card">
+		        <div class="card" style="height: 626px; border-color: #999999; box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.2);">
 		          <div class="card-body">
 		
-		            <ul id="chatRoomList" class="list-unstyled mb-0" style="max-height: 700px;">
+		            <ul id="chatRoomList" class="list-unstyled mb-0" style="height: 700px;">
 		              
 		              <c:forEach var="chatRoomNotification" items="${chatRoomNotifications}" varStatus="status">
 		              		<c:if test="${chatRoomNotification.notification_count == 0}">
@@ -79,15 +94,15 @@
 						    </c:if>
 						        <a href="#!" class="chat-link d-flex justify-content-between" data-room-uuid="${chatRoomNotification.type_uuid}">
 						            <div class="d-flex flex-row">
-						                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+						                <img style="width:60px ; height: 60px;" src="data:image/jpeg;base64,${chatRoomNotification.photo_base64}" alt="avatar"
 						                    class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
 						                <div class="pt-1">
-						                    <p class="fw-bold mb-0">${chatRoomNotification.opponent_username}</p>
-						                    <p class="small text-muted">Hello, Are you there?</p>
+						                    <p class="fw-bold mb-0">${chatRoomNotification.nickname}</p>
+						                    <p class="small text-muted">${chatRoomNotification.last_chatting}</p>
 						                </div>
 						            </div>
 						            <div class="pt-1 chatRoomTime">
-						                <span id="timeAgo"></span>
+						                <span id="timeAgo" style="color: #6c757d !important;">${chatRoomNotification.relative_time}</span>
 						                <c:if test="${chatRoomNotification.notification_count != 0}">
 						                    <span class="badge bg-danger float-end">${chatRoomNotification.notification_count}</span>
 						                </c:if>
@@ -96,103 +111,6 @@
 						    </li>
 						</c:forEach>
 
-		              
-		              
-		              
-		              
-		              
-		              
-		              <li class="p-2 border-bottom">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Danny Smith</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">5 mins ago</p>
-		                  </div>
-		                </a>
-		              </li>
-		              <li class="p-2 border-bottom">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Alex Steward</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">Yesterday</p>
-		                  </div>
-		                </a>
-		              </li>
-		              <li class="p-2 border-bottom">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Ashley Olsen</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">Yesterday</p>
-		                  </div>
-		                </a>
-		              </li>
-		              <li class="p-2 border-bottom">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Kate Moss</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">Yesterday</p>
-		                  </div>
-		                </a>
-		              </li>
-		              <li class="p-2 border-bottom">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Lara Croft</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">Yesterday</p>
-		                  </div>
-		                </a>
-		              </li>
-		              <li class="p-2">
-		                <a href="#!" class="d-flex justify-content-between">
-		                  <div class="d-flex flex-row">
-		                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-		                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-		                    <div class="pt-1">
-		                      <p class="fw-bold mb-0">Brad Pitt</p>
-		                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-		                    </div>
-		                  </div>
-		                  <div class="pt-1">
-		                    <p class="small text-muted mb-1">5 mins ago</p>
-		                    <span class="text-muted float-end"><i class="fas fa-check" aria-hidden="true"></i></span>
-		                  </div>
-		                </a>
-		              </li>
 		            </ul>
 		
 		          </div>
@@ -210,95 +128,13 @@
 		    </div>
 		
 		  </div>
+		
+		</c:if>
+		
+		  
 		</section>
-        
-        
-        
-        
-        <!-- 채팅방 보여주기 기능 끝 -->
-        
-        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Get In Touch</h5>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Quick Links</h5>
-                        <a class="btn btn-link text-white-50" href="">About Us</a>
-                        <a class="btn btn-link text-white-50" href="">Contact Us</a>
-                        <a class="btn btn-link text-white-50" href="">Our Services</a>
-                        <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-                        <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Photo Gallery</h5>
-                        <div class="row g-2 pt-2">
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-1.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-2.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-3.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-4.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-5.jpg" alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="img/property-6.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Newsletter</h5>
-                        <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                        </div>          
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="copyright">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved. 
-							
-							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-							Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="footer-menu">
-                                <a href="">Home</a>
-                                <a href="">Cookies</a>
-                                <a href="">Help</a>
-                                <a href="">FQAs</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
+		<!-- 채팅방 보여주기 기능 끝 -->
 
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -330,7 +166,7 @@ $(document).ready(function() {
         roomUuid = '${chatRoomUuid}';
         getChatting(roomUuid);
     }
-
+    
     // AJAX 호출을 수행하는 별도의 함수
     function getChatting(roomUuid) {
         $.ajax({
@@ -345,11 +181,11 @@ $(document).ready(function() {
                         // 사용자 이름이 같은 경우, 왼쪽에 이미지를 위치시킴
                         chattingListHtml += `
                             <li class="d-flex justify-content-between mb-4">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                                <img style="width:60px;height:60px;" src="data:image/jpeg;base64,\${chat.photo_base64}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between p-3">
-                                        <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
-                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                        <p class="fw-bold mb-0">\${chat.nickname}</p>
+                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${chat.relative_time}</p>
                                     </div>
                                     <div class="card-body">
                                         <p class="mb-0">\${chat.chat_content}</p>
@@ -358,43 +194,47 @@ $(document).ready(function() {
                             </li>`;
                     } else {
                         // 사용자 이름이 다른 경우, 오른쪽에 이미지를 위치시킴
-                        chattingListHtml += `
+                    	chattingListHtml += `
                             <li class="d-flex justify-content-between mb-4">
-                                <div class="card w-100">
+                                <div class="card">
                                     <div class="card-header d-flex justify-content-between p-3">
-                                        <p class="fw-bold mb-0">\${chat.chat_chatter}</p>
-                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date(chat.chatted_at).toLocaleString()}</p>
+                                        <p class="fw-bold mb-0">\${chat.nickname}</p>
+                                        <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${chat.relative_time}</p>
                                     </div>
                                     <div class="card-body">
                                         <p class="mb-0">\${chat.chat_content}</p>
                                     </div>
                                 </div>
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+                                <img style="width:60px;height:60px;margin-left:16px;margin-right:0px;" src="data:image/jpeg;base64,\${chat.photo_base64}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
                             </li>`;
                     }
                 });
 
                 // 입력창
                 sendHtml += `
-                    <form class="form-inline">       
-                        <li class="bg-white mb-3" style="border-radius: 15px;">
-                            <div class="form-outline" style="width: 100%;">
-                                <textarea class="form-control" id="chat_content" rows="4"></textarea>
-                            </div>
-                        </li>
-                        `;
+						    <form class="form-inline">       
+						        <li class="bg-white mb-3" style="border-radius: 15px;">
+						            <div class="form-outline" style="width: 100%; position: relative; overflow: hidden;">
+						                <textarea placeholder="Message.." class="form-control" id="chat_content" rows="1" style="border-radius:12px; resize: none; line-height: 45px; border-color: #999999; max-height: 200px; overflow: hidden; line-height: 1.4; padding-top: 20px; padding-bottom: 20px;"></textarea>
+						                <button type="submit" id="send" class="btn btn-info btn-rounded float-end" style="border-radius:7px; position: absolute; right: 10px; bottom: 10px; z-index: 100; background-color:#FFFFFF; border-color:#999999; width: 40px; height: 40px; padding-left: 10px;">
+						                    <i style="color:#767676;" class="far fa-paper-plane"></i>
+						                </button>
+						            </div>
+						        </li>
+						    </form>
+						    `;
 
-                // send 버튼
-                sendHtml += `
-                        <button type="submit" id="send" class="btn btn-info btn-rounded float-end">Send</button>
-                    </form>
-                    `;
+
 
                 $('#chatting-ul').html(chattingListHtml);
                 $('#send-ul').html(sendHtml);
 
                 var chattingUl = $('#chatting-ul');
                 chattingUl.scrollTop(chattingUl.prop('scrollHeight'));
+                
+                $('html, body').animate({
+                    scrollTop: $('#send').offset().top
+                }, 'fast');
 
             },
 
@@ -425,6 +265,8 @@ $(document).ready(function() {
 host_address = '${hostAddress}'
 var username = '@Session["username"]';
 
+
+
 const stompClient = new StompJs.Client({
     brokerURL: `ws://\${host_address}:8081/gs-guide-websocket`
 });
@@ -433,10 +275,13 @@ stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
     stompClient.subscribe('/topic/greetings', (greeting) => {
-        const chattingData = JSON.parse(greeting.body);
+        const chat = JSON.parse(greeting.body);
         // 필요한 데이터를 추출하여 사용
-        // 예: chattingData.chat_uuid, chattingData.chat_content 등
-        showGreeting(chattingData); // 또는 필요에 따라 다른 데이터를 사용
+        // 예: chat.chat_uuid, chat.chat_content 등
+        showGreeting(chat); // 또는 필요에 따라 다른 데이터를 사용
+    });
+    stompClient.subscribe('/topic/typing', (typingInfo) => {
+        showTypingStatus(JSON.parse(typingInfo.body));
     });
 };
 
@@ -472,10 +317,15 @@ function disconnect() {
 }
 
 function sendName() {
+	
+	const textarea = document.getElementById('chat_content');
+    const text = textarea.value;
+    const formattedText = text.replace(/\n/g, '<br>'); 
+	
     stompClient.publish({
         destination: "/app/hello",
         body: JSON.stringify({
-        	'chat_content': $("#chat_content").val(),
+        	'chat_content': formattedText,
         	'room_uuid' : roomUuid,
         	'chat_chatter' : '${mvo.username}'
         })
@@ -483,41 +333,41 @@ function sendName() {
     
     /// textarea 내용 초기화
     $('#chat_content').val('');
+    
 }
 
-function showGreeting(chattingData) {
+function showGreeting(chat) {
     var htmlContent;
     
-    // mvo.username과 chattingData.chat_chatter가 일치하는 경우
-    if ('${mvo.username}' === chattingData.chat_chatter) {
+    // mvo.username과 chat.chat_chatter가 일치하는 경우
+    if ('${mvo.username}' === chat.chat_chatter) {
         htmlContent = `
-        <li class="d-flex justify-content-between mb-4">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <li class="d-flex justify-content-between mb-4">
+            <img style="width:60px;height:60px;" src="data:image/jpeg;base64,\${chat.photo_base64}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
             <div class="card">
                 <div class="card-header d-flex justify-content-between p-3">
-                    <p class="fw-bold mb-0">\${chattingData.chat_chatter}</p>
-                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
+                    <p class="fw-bold mb-0">\${chat.nickname}</p>
+                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${chat.relative_time}</p>
                 </div>
                 <div class="card-body">
-                    <p class="mb-0">\${chattingData.chat_content}</p>
+                    <p class="mb-0">\${chat.chat_content}</p>
                 </div>
             </div>
-        </li>
-        `;
+        </li>`;
     } else {
-        // mvo.username과 chattingData.chat_chatter가 일치하지 않는 경우
+        // mvo.username과 chat.chat_chatter가 일치하지 않는 경우
     	htmlContent = `
-        <li class="d-flex justify-content-between mb-4">
-            <div class="card w-100">
+            <li class="d-flex justify-content-between mb-4">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between p-3">
-                    <p class="fw-bold mb-0">\${chattingData.chat_chatter}</p>
-                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${new Date().toLocaleString()}</p>
+                    <p class="fw-bold mb-0">\${chat.nickname}</p>
+                    <p class="text-muted small mb-0"><i class="far fa-clock"></i>\${chat.relative_time}</p>
                 </div>
                 <div class="card-body">
-                    <p class="mb-0">\${chattingData.chat_content}</p>
+                    <p class="mb-0">\${chat.chat_content}</p>
                 </div>
             </div>
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar" class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+            <img style="width:60px;height:60px;margin-left:16px;margin-right:0px;" src="data:image/jpeg;base64,\${chat.photo_base64}" alt="avatar" class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
         </li>`;
     }
 
@@ -538,6 +388,36 @@ $(document).on('submit', 'form', function(e) {
 $(document).on('click', '#send', function() {
     sendName();
 });
+
+
+
+// 타이핑 중이라면 상대방에게 입력중이라고 메시지 보내기
+var isTyping = false;
+
+$(document).on('input', '#chat_content', function() {
+    var currentStatus = $(this).val().length > 0;
+    if (currentStatus !== isTyping) {
+        isTyping = currentStatus;
+        sendTypingStatus(isTyping);
+    }
+});
+
+function sendTypingStatus(typing) {
+    stompClient.publish({
+        destination: "/app/typing",
+        body: JSON.stringify({ username: '${mvo.username}', isTyping: typing })
+    });
+}
+
+function showTypingStatus(typingInfo) {
+    if (typingInfo.isTyping) {
+        // 사용자가 입력 중인 경우 UI에 표시 (예: "사용자가 입력 중입니다" 메시지 추가)
+        console.log('사용자가 입력중입니다.');
+    } else {
+        // 사용자가 입력을 중단한 경우 UI에서 해당 메시지 제거
+    	console.log('사용자가 입력중이 아닙니다.');
+    }
+}
 
 /****************************
 	[웹소켓] 끝
@@ -569,6 +449,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+/****************************
+	[textarea 글 쓰고 Enter 누르면 글 보내기]
+	[shift+enter 누르면 줄바꿈함] 
+*****************************/
+$(document).on('keydown', '#chat_content', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendName();
+    } else if (e.key === 'Enter' && e.shiftKey) {
+        // Enter만 눌렀을 때 (Shift + Enter는 제외)
+    	setTimeout(adjustHeight.bind(this), 0); 
+        
+    }
+});
+
+function adjustHeight() {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  }
+
+$(document).on('input', '#chat_content', adjustHeight); // 입력할 때마다 크기 조절
 
 
 </script>

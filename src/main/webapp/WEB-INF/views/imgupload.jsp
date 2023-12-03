@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SimKoong</title>
+<title>Babe-베이브</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -156,11 +156,12 @@ div.desc {
   clear: both;
 }
 
+
+
 </style>
 </head>
 <body>
- <div class="container-xxl bg-white p-0"> 
-	<div class="cards-list">
+   <div class="container-xxl bg-white p-0">
       <jsp:include page="header.jsp"></jsp:include>
       <!-- Navbar End -->
       

@@ -1,0 +1,25 @@
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.small-circle {
+  border: 1px solid #767676;
+  display: inline-block;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.progress-container {
+	text-align : center;
+}
+.dot-container {
+	text-align : center;
+}
+
+.active {
+  background-color: #f9b;
+  border: solid 1px #767676;
+}

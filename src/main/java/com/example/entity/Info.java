@@ -33,12 +33,9 @@ public class Info {
     private Boolean status;
     private Boolean isFirst;
     private String photo_base64;
+    private List<String> photos_base64;
     private List<String> role;
     private List<String> address;
     private Map<Integer, String> photo;
 
-
-    // Add getters and setters for all fields here
-
-    // You can also add constructors as needed
 }

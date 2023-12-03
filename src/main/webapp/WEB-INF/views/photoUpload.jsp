@@ -13,7 +13,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SimKoong</title>
+<title>Babe-베이브</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -46,7 +46,12 @@
 
 <!-- Template Stylesheet -->
 <link href="css/style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+	
+<link rel="stylesheet" href="css/progress.css">
+<link rel="stylesheet" href="scss/next.scss">
+
 <style>
 body {
 	margin-top: 20px;
@@ -109,8 +114,8 @@ body {
 
 .card:hover {
 	transform: scale(0.9, 0.9);
-	box-shadow: 5px 5px 30px 15px rgba(0, 0, 0, 0.25), -5px -5px 30px 15px
-		rgba(0, 0, 0, 0.22);
+	box-shadow: 5px 5px 30px 15px rgba(237, 218, 225, 0.25), -5px -5px 30px
+		15px rgba(237, 225, 225, 0.22);
 }
 
 .title-white {
@@ -127,37 +132,57 @@ body {
 		flex-direction: column;
 	}
 }
- #move{
- 	color : graytext;
- 	text-align:right;
- 	margin-top:10px;
- 	margin-bottom:10px;
- }
+
+#move {
+	color: graytext;
+	text-align: right;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 </style>
 </head>
 <body>
 	<div class="container-xxl bg-white p-0">
 		<jsp:include page="header.jsp"></jsp:include>
 
-		<br> <br> <br> <br>
+		<br> <br> 
 		<!-- 사진 업로드  -->
+		
 
-		<div class="row">
-			<div class="col-12 text-center">
-				<h2 class="upload-text"> <i class="material-icons">file_upload</i> UPLOAD YOUR IMAGES</h2>
-			</div>
-		</div>
 		<div class="container">
+		
+		<div class="progress-container">
+	        <div class="dot-container" style="padding:0px;">
+	            <ul style="padding-left:0px;">
+	            <a href="/photoUpload"><li class="small-circle active"></li></a>
+	            <a href="/update"><li class="small-circle"></li></a>
+	            </ul>
+	        </div>
+	    </div>
+
+		<!-- <div class="row">
+			<div class="col-12 text-center">
+				<h2 class="upload-text">
+					<i class="material-icons">file_upload</i> 프로필 사진을 등록해주세요
+				</h2>
+			</div>
+		</div> -->
+		
 			<div class="main-body">
 				<div class="cards-list">
 					<c:forEach items="${imageDatas}" var="imageData" varStatus="i">
 						<div class="card ${i.count}">
 							<div class="card_image">
-								<img src="data:image/jpeg;base64,${imageData}" style="cursor: pointer;" onclick="openFileInput(${i.count})">
-								<form action="${cpath}/fileUpload" method="post" enctype="multipart/form-data" id="imageForm${i.count}">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-										<input type="file" id="photo${i.count}" name="file" accept="image/*"  class="custom-input" onchange="uploadOnChange(this)"> 
-										  <input type="hidden" id="photoNum" name="photoNum" value="${i.count}">
+								<img src="data:image/jpeg;base64,${imageData}"
+									style="cursor: pointer;" onclick="openFileInput(${i.count})">
+								<form action="${cpath}/fileUpload" method="post"
+									enctype="multipart/form-data" id="imageForm${i.count}">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" /> <input type="file"
+										id="photo${i.count}" name="file" accept="image/*"
+										class="custom-input" onchange="uploadOnChange(this)">
+									<input type="hidden" id="photoNum" name="photoNum"
+										value="${i.count}">
 								</form>
 							</div>
 						</div>
@@ -165,19 +190,25 @@ body {
 				</div>
 				<br> <br> <br>
 			</div>
-			<div class="row">
-				<div class="col-sm-10">
-					<h4 id="move">정보 입력 페이지로 이동</h4>
-				</div>
-				<div class="col-sm-2">
-					<a href="/update" class="btn btn-lg btn-lg-square"> <i
-						class="bi bi-chevron-right" style="color: white"></i>
-					</a>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<h4 id="move" style="margin: 0; margin-right: 20px;">정보 입력
+								페이지로 이동</h4>
+							<a href="/update" class="btn btn-lg"
+								style="background-color: pink; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+								<i class="bi bi-chevron-right" style="color: white;"></i>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
-
-
+			
 		</div>
+
+
+	</div>
 	</div>
 
 
@@ -194,22 +225,22 @@ body {
 	<script src="js/main.js"></script>
 
 	<script>
-	 function uploadOnChange(input) {
-	       if (input.files && input.files[0]) {
-	           // 파일이 선택되면 자동으로 form submit
-	          input.parentNode.submit();
-	       }
-	   }
-	     
-	    function openFileInput(count) {
-	        document.getElementById('photo' + count).click();
-	    }
+    function uploadOnChange(input) {
+          if (input.files && input.files[0]) {
+              // 파일이 선택되면 자동으로 form submit
+             input.parentNode.submit();
+          }
+      }
+        
+       function openFileInput(count) {
+           document.getElementById('photo' + count).click();
+       }
 
-	    function displayFileName(input) {
-	        var fileName = input.files[0].name;
-	        // 여기에서 파일 이름을 표시하거나 추가적인 작업을 수행할 수 있습니다.
-	        console.log(fileName);
-	    }
-	</script>
+       function displayFileName(input) {
+           var fileName = input.files[0].name;
+           // 여기에서 파일 이름을 표시하거나 추가적인 작업을 수행할 수 있습니다.
+           console.log(fileName);
+       }
+   </script>
 </body>
 </html>

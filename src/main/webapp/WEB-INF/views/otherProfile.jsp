@@ -13,7 +13,7 @@
 <html lang="en" style="background: white;">
 <head>
 <meta charset="utf-8">
-<title>Babe</title>
+<title>Babe-베이브</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
@@ -116,12 +116,10 @@ body {
 	margin-right: 1rem;
 }
 
-
-
 .slider-container {
 	display: flex;
-	position:relative;
-	left:30px;
+	position: relative;
+	left: 30px;
 	height: 70%;
 	width: 80%;
 }
@@ -133,7 +131,6 @@ body {
 	border-radius: 20px;
 	overflow: hidden;
 	position: relative;
-	
 }
 
 .slides {
@@ -147,7 +144,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-shrink: 0;
-	width: 300px;	
+	width: 300px;
 	margin-right: 0px;
 	box-sizing: border-box;
 	background: #fff2ed;
@@ -164,28 +161,26 @@ body {
 	background: none;
 	border: none;
 }
- a.slide__prev,
-  a.slider::before {
-    position: absolute;
-    width: 40%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
-    z-index: 1;
-  }
 
-  a.slide__next,
-  a.slider::after {
-    position: absolute;
-    width: 40%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
-    z-index: 1;
-  }
+a.slide__prev, a.slider::before {
+	position: absolute;
+	width: 40%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
+	z-index: 1;
+}
 
+a.slide__next, a.slider::after {
+	position: absolute;
+	width: 40%;
+	height: 100%;
+	top: 0;
+	right: 0;
+	opacity: 0; /* 화면에는 보이지 않지만 요소는 있음 */
+	z-index: 1;
+}
 
 .slider::before, .slider::after {
 	content: "";
@@ -208,192 +203,199 @@ body {
 }
 
 .nickname {
-    font-size: 30px; 
-    font-weight: bold; 
+	font-size: 30px;
+	font-weight: bold;
 }
 
 .age {
-    font-size: 18px; 
-    font-weight: bold; 
-
+	font-size: 18px;
+	font-weight: bold;
 }
 </style>
 </head>
 <body style="background: white;">
-	<jsp:include page="header.jsp"></jsp:include>
-	<br>
-	<br>
-	<div class="container">
-	<div class="main-body">
-		<div class="container-xl px-4 mt-4">
-			<div class="row">
-					<div class="col-xl-4">
-						<div class="card mb-4 mb-xl-0" style="height:91%;">
-							<!-- <div class="card-header">Profile Picture</div> -->
-							<div class="card-body text-center" style="margin-top:40px;">
-								<!-- Profile picture image-->
-								<div class="slider-container">
-									<div class="slider">
-										<div class="slides">
-											<c:forEach items="${imageDatas}" var="imageData"
-												varStatus="i">
-												<div id="slides__${i.count}" class="slide">
-													<div class="image-box" style="height: 100%;">
-														<img class="img-account-profile mb-2"
-															src="data:image/jpeg;base64,${imageData}" alt="S3 Image"
-															title="">
-													</div>
-													<c:choose>
-														<c:when test="${i.count eq 1}">
-															<!-- i가 1일때는 이전버튼 :4, 다음버튼은 2  -->
-															<a id="slide__prev" class="slide__prev" href="#slides__4"
-																title="prev"></a>
-															<a id="slide__next" class="slide__next" href="#slides__2"
-																title="Next"><i class='fas fa-caret-right'
-																style='margin-top: -10px; color: black; font-size: 36px'></i></a>
-														</c:when>
-														<c:when test="${i.count eq 4}">
-															<!-- i가 4일때는 이전버튼 :3, 다음버튼은 1  -->
-															<a id="slide__prev" class="slide__prev" href="#slides__3"
-																title="prev"></a>
-															<a id="slide__next" class="slide__next" href="#slides__1"
-																title="Next"></a>
-														</c:when>
-														<c:otherwise>
-															<a id="slide__prev" class="slide__prev"
-																href="#slides__${i.count-1}" title="prev"></a>
-															<a id="slide__next" class="slide__next"
-																href="#slides__${i.count+1}" title="Next"></a>							
-														</c:otherwise>
-														
-													</c:choose>													
-												</div>
-																			
-											</c:forEach>
+	<div class="container-xxl bg-white p-0">
+		<jsp:include page="header.jsp"></jsp:include>
+		<br> <br>
+		<div class="container">
+			<div class="main-body">
+				<div class="container-xl px-4 mt-4">
+					<div class="row">
+						<div class="col-xl-4">
+							<div class="card mb-4 mb-xl-0" style="height: 91%;">
+								<!-- <div class="card-header">Profile Picture</div> -->
+								<div class="card-body text-center" style="margin-top: 40px;">
+									<!-- Profile picture image-->
+									<div class="slider-container">
+										<div class="slider">
+											<div class="slides">
+												<c:forEach items="${imageDatas}" var="imageData"
+													varStatus="i">
+													<div id="slides__${i.count}" class="slide">
+														<div class="image-box" style="height: 100%;">
+															<img class="img-account-profile mb-2"
+																src="data:image/jpeg;base64,${imageData}" alt="S3 Image"
+																title="">
+														</div>
+														<c:choose>
+															<c:when test="${i.count eq 1}">
+																<!-- i가 1일때는 이전버튼 :4, 다음버튼은 2  -->
+																<a id="slide__prev" class="slide__prev"
+																	href="#slides__4" title="prev"></a>
+																<a id="slide__next" class="slide__next"
+																	href="#slides__2" title="Next"><i
+																	class='fas fa-caret-right'
+																	style='margin-top: -10px; color: black; font-size: 36px'></i></a>
+															</c:when>
+															<c:when test="${i.count eq 4}">
+																<!-- i가 4일때는 이전버튼 :3, 다음버튼은 1  -->
+																<a id="slide__prev" class="slide__prev"
+																	href="#slides__3" title="prev"></a>
+																<a id="slide__next" class="slide__next"
+																	href="#slides__1" title="Next"></a>
+															</c:when>
+															<c:otherwise>
+																<a id="slide__prev" class="slide__prev"
+																	href="#slides__${i.count-1}" title="prev"></a>
+																<a id="slide__next" class="slide__next"
+																	href="#slides__${i.count+1}" title="Next"></a>
+															</c:otherwise>
 
+														</c:choose>
+													</div>
+
+												</c:forEach>
+
+											</div>
 										</div>
+
 									</div>
+									<br>
+									<div class="row">
+										<div class="col-xl">
+											<span class="nickname">${recommendUser.nickname}, </span><span
+												class="age">${recommendUser.age}</span> <br> <span
+												style="text-align: left;">${recommendUser.address[0].replace('[','')}</span>
+										</div>
+										<div class="col-xl">
+											<div class="small font-italic text-muted mb-4"
+												style="margin-bottom: 50px; left: 50px;">
+												<a id="heart"
+													style="position: absolute; z-index: 2000; font-size: 50px; left: 55%; color: #ff8cb9;"
+													href="/recommendLike?oppUserName=${recommendUser.username}"><i
+													class="fa fa-heart"></i></a> <a
+													href="/recommendDislike?oppUserName=${recommendUser.username}"
+													style="position: absolute; bottom: 7.5%; z-index: 2000; font-size: 59px; color: #747d8c;"><i
+													class="fa fa-times"></i></a>
+											</div>
+										</div>
+
+									</div>
+
 
 								</div>
-								<br>
-								<div class="row">
-									<div class="col-xl" >	
-									     <span class="nickname" >${recommendUser.nickname}, </span><span class="age">${recommendUser.age}</span>
-									     <br>
-									     <span style="text-align: left;" >${recommendUser.address[0].replace('[','')}</span>
-									</div>
-									<div class="col-xl">					
-										<div class="small font-italic text-muted mb-4" style="margin-bottom:50px; left:50px;">	
-											<a id="heart" style="position: absolute; z-index: 2000; font-size:50px; left:55%; color:#ff8cb9;" href="/recommendLike?oppUserName=${recommendUser.username}"><i class="fa fa-heart"></i></a>
-		                    			    <a href="/recommendDislike?oppUserName=${recommendUser.username}" style="position: absolute; bottom:7.5%; z-index: 2000; font-size:59px; color:#747d8c;"><i class="fa fa-times"></i></a>
-		                    			</div>
-								    </div>
-										
-		                    	</div>  
-		                    	 
-																
 							</div>
+							<br>
 						</div>
-						<br>
-					</div>
-					<!-- Header End -->
-					<div class="col-xl-8">
-						<!-- Account details card-->
-						<div class="card mb-4" style="height:91%;" >
-						<!-- 	<div class="card-header">Account Details</div> -->
-							<div class="card-body" style="margin-top:30px; ">
-								<form>
-									<div class="row gx-3 mb-3">
-										<!-- Form Row-->
-										<div class="col-md-6">
-											<label class="small mb-1">Gender</label> 
-											<input class="form-control" type="text" placeholder="-- 비공개 --"  value="${recommendUser.sex}"> 
+						<!-- Header End -->
+						<div class="col-xl-8">
+							<!-- Account details card-->
+							<div class="card mb-4" style="height: 91%;">
+								<!--    <div class="card-header">Account Details</div> -->
+								<div class="card-body" style="margin-top: 30px;">
+									<form>
+										<div class="row gx-3 mb-3">
+											<!-- Form Row-->
+											<div class="col-md-6">
+												<label class="small mb-1">Gender</label> <input
+													class="form-control" type="text" placeholder="-- 비공개 --"
+													value="${recommendUser.sex}">
+											</div>
+											<div class="col-md-6">
+												<label class="small mb-1">Job</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.job}">
+											</div>
 										</div>
-										<div class="col-md-6">
-											<label class="small mb-1">Job</label> <input
-												class="form-control" type="text" 
-												placeholder="--입력 안 됨--"  value="${recommendUser.job}">
-										</div>		
-									</div>
-									<div class="row gx-3 mb-3">
-										<div class="col-md-6">
-											<label class="small mb-1">Education</label> <input
-												class="form-control" type="text" placeholder="--입력 안 됨--"
-												value="${recommendUser.school}">
+										<div class="row gx-3 mb-3">
+											<div class="col-md-6">
+												<label class="small mb-1">Education</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.school}">
+											</div>
+											<div class="col-md-6">
+												<label class="small mb-1">Interest</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.interest}">
+											</div>
 										</div>
-										<div class="col-md-6">
-											<label class="small mb-1">Interest</label> <input
-												class="form-control" type="text" placeholder="--입력 안 됨--"
-												value="${recommendUser.interest}">
-										</div>
-									</div>
 
-									
-									<div class="row gx-3 mb-3">
-										<div class="col-md-6">
-											<label class="small mb-1" >MBTI</label>
-											<input class="form-control" 
-												type="text" placeholder="--입력 안 됨--" 
-												value="${recommendUser.mbti}">
+
+										<div class="row gx-3 mb-3">
+											<div class="col-md-6">
+												<label class="small mb-1">MBTI</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.mbti}">
+											</div>
+											<div class="col-md-6">
+												<label class="small mb-1">Drink</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.drinking}">
+
+											</div>
 										</div>
-										<div class="col-md-6">
-											<label class="small mb-1" >Drink</label>
-											<input class="form-control" type="text"
-												placeholder="--입력 안 됨--" value="${recommendUser.drinking}">
-										
+										<div class="row gx-3 mb-3">
+											<div class="col-md-6">
+												<label class="small mb-1">Sport</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.sport}">
+											</div>
+											<!-- Form Group (birthday)-->
+											<div class="col-md-6">
+												<label class="small mb-1">Smoke</label> <input
+													class="form-control" type="text" placeholder="--입력 안 됨--"
+													value="${recommendUser.smoking}">
+											</div>
 										</div>
-									</div>
-									<div class="row gx-3 mb-3">
-										<div class="col-md-6">
-											<label class="small mb-1" >Sport</label> <input
-												class="form-control" type="text"
-												placeholder="--입력 안 됨--" value="${recommendUser.sport}">
+										<div class="col-md-12">
+											<label class="small mb-1" for="inputBirthday">자기 소개</label>
+											<textarea rows="5" class="form-control" readonly="readonly"
+												style="background-color: white; resize: none; outline: none; width: 100%; max-width: 100%; height: auto;">${mvo.aboutme}</textarea>
 										</div>
-										<!-- Form Group (birthday)-->
-										<div class="col-md-6">
-											<label class="small mb-1" >Smoke</label> <input
-												class="form-control"  type="text"
-												placeholder="--입력 안 됨--"
-												value="${recommendUser.smoking}">
-										</div>
-									</div>
-									<div class="row gx-3 mb-3">
-										<label class="small mb-1">AboutMe</label>
-										<textarea class="border border-2 small mb-1" rows="5"
-											style="resize: none; outline: none; width: 100%; max-width: 100%; height: auto; border-radius: 15px;"
-											readonly>${recommendUser.aboutme}</textarea>
-									</div></div>
-									<br>
-									<!-- Save changes button-->
-								<!-- 	<button class="btn btn-primary" type="button">Save
-										changes</button> -->
+								</div>
+								<br>
+								<!-- Save changes button-->
+								<!--    <button class="btn btn-primary" type="button">Save
+                              changes</button> -->
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-				</div>
-				</div>
-				
-				  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="background: pink; border-color: pink;"><i class="bi bi-arrow-up"></i></a>
-    </div>
+			</div>
+		</div>
 
-			
+		<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+			style="background: pink; border-color: pink;"><i
+			class="bi bi-arrow-up"></i></a>
+	</div>
 
 
-				<!-- JavaScript Libraries -->
-				<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-				<script
-					src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-				<script src="lib/wow/wow.min.js"></script>
-				<script src="lib/easing/easing.min.js"></script>
-				<script src="lib/waypoints/waypoints.min.js"></script>
-				<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-				<!-- Template Javascript -->
-				<script src="js/main.js"></script>
 
-				<script>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="lib/wow/wow.min.js"></script>
+	<script src="lib/easing/easing.min.js"></script>
+	<script src="lib/waypoints/waypoints.min.js"></script>
+	<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="js/main.js"></script>
+
+	<script>
        
        function uploadImage() {
             const input = document.getElementById('uploadInput');

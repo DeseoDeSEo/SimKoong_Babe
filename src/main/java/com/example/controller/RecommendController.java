@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +23,9 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.example.entity.Info;
+import com.example.entity.Rating;
 import com.example.service.DBService;
+import com.example.service.RatingService;
 import com.example.service.RecommendService;
 
 
@@ -34,6 +37,9 @@ public class RecommendController {
 	
 	@Autowired
 	RecommendService recommendService;
+	
+	@Autowired
+	RatingService ratingService;
 	
 	@Autowired // 사진 업로드할때 필요
 	private AmazonS3 s3client;
@@ -51,12 +57,13 @@ public class RecommendController {
 		// TODO : 한 번 좋아요를 누르면 더 이상 추천에 뜨지 않음
 		Info recommendUser = recommendService.getRecommendUsers(username);
 
-		List<String> imageDatas = recommendService.getS3Photos(recommendUser);
+		if (recommendUser != null) {
+			List<String> imageDatas = recommendService.getS3Photos(recommendUser);
+			
+			model.addAttribute("imageDatas", imageDatas);
+			model.addAttribute("recommendUser", recommendUser);
+		} 
 		
-
-		model.addAttribute("imageDatas", imageDatas);
-		model.addAttribute("recommendUser", recommendUser);
-
 		return "recommend/recommend";
 	}
 	
@@ -67,6 +74,8 @@ public class RecommendController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		
+		//rating 정보 저장
+		ratingService.addRating(new Rating(username,1,oppUserName));
 		// from, to 둘 다 저장
 		recommendService.saveLikeInteraction(username, oppUserName, "like");
 		
@@ -122,7 +131,6 @@ public class RecommendController {
 		System.out.println("다른 유저의 프로필 방문");
 		// Spring security
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
 		DriverConfigLoader loader = dbService.getConnection();
 		List<Info> infos = dbService.findAllByColumnValue(loader, Info.class,"username", oppUserName); 
 		Info info = infos.get(0);		
